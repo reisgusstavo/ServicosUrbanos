@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <div class="container">
+
+<div class="logo">
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" style="height: 36px;">
+    <span class="logo-text">Serviços Urbanos</span>
+</div>
+
+    <title>Área do Usuário</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+ 
+<div class="container" style="max-width: 560px;">
+ 
+    <h1>Área do Usuário</h1>
+ 
+    <h2>Criar Solicitação</h2>
+ 
+    <div class="form-card">
+        <form action="/criar-solicitacao" method="POST" enctype="multipart/form-data">
+ 
+            <input type="text" name="nome" placeholder="Nome completo" required>
+ 
+            <input type="text" name="endereco" placeholder="Endereço" required>
+ 
+            <input type="text" name="telefone" placeholder="Telefone para contato" required>
+            <label>Imagem (opcional)</label>
+            <input type="file" name="imagem" accept="image/*">
+ 
+            <select name="tipo" required>
+                <option value="" disabled selected>Selecione o tipo de serviço</option>
+                <option>Poda de Árvore</option>
+                <option>Recolhimento de Lixo</option>
+                <option>Limpeza Urbana</option>
+                <option>Buraco na Rua</option>
+                
+            </select>
+ 
+            <textarea name="descricao" placeholder="Descreva o problema com detalhes" required></textarea>
+ 
+            <button type="submit">Enviar Solicitação</button>
+ 
+        </form>
+    </div>
+ 
+    <hr>
+ 
+    <h2>Minhas Solicitações</h2>
+ 
+    {% for s in solicitacoes %}
+    <div style="background:#1e293b; padding:10px; margin:10px; border-radius:10px;">
+        <p><b>Tipo:</b> {{ s.tipo }}</p>
+        <p><b>Descrição:</b> {{ s.descricao }}</p>
+        <p><b>Status:</b> {{ s.status }}</p>
+    </div>
+    {% endfor %}
+ 
+    {% if not solicitacoes %}
+    <div class="empty-state" style="text-align:center; padding:2.5rem; color:#3d4d62; font-size:0.9rem;">
+        <div style="font-size:2rem; margin-bottom:0.75rem; opacity:0.4;">📋</div>
+        Nenhuma solicitação ainda. Crie a sua acima!
+    </div>
+    {% endif %}
+ 
+    <br>
+ 
+    <a href="/logout">
+        <button>Sair</button>
+    </a>
+ 
+</div>
+ 
+</body>
+</html>

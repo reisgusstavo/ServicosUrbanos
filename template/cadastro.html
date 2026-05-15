@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Criar Conta</h1>
+
+    <form action="/criar-usuario" method="POST">
+
+        <input type="email" name="email" placeholder="Email" required>
+
+        <input type="password" name="senha" placeholder="Senha" required>
+
+        <button type="submit">Cadastrar</button>
+
+    </form>
+
+    <br>
+
+    <a href="/">
+        <button>Voltar para Login</button>
+    </a>
+
+</div>
+
+</body>
+</html>

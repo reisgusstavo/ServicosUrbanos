@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel - Administrador</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" style="height: 36px;">
+        <span class="logo-text">Serviços Urbanos</span>
+    </div>
+
+    <h1>Painel Administrativo</h1>
+
+    <a href="/logout">
+        <button>Sair</button>
+    </a>
+
+    <hr>
+
+    {% for solicitacao in solicitacoes %}
+    <div class="card">
+        <h3>{{ solicitacao[2] }}</h3>
+        <p><strong>Email:</strong> {{ solicitacao[1] }}</p>
+        <p><strong>Endereço:</strong> {{ solicitacao[3] }}</p>
+        <p><strong>Telefone:</strong> {{ solicitacao[4] }}</p>
+        <p><strong>Tipo:</strong> {{ solicitacao[5] }}</p>
+        <p><strong>Descrição:</strong> {{ solicitacao[6] }}</p>
+        <p><strong>Status:</strong> {{ solicitacao[7] }}</p>
+        <p><strong>Data:</strong> {{ solicitacao[8].strftime('%d/%m/%Y %H:%M') }}</p>
+
+        {% if solicitacao[9] %}
+        <p>DEBUG IMAGEM: {{ solicitacao[9] }}</p>
+        <img src="{{ url_for('static', filename='uploads/' + solicitacao[9]) }}"
+             alt="Imagem da solicitação"
+             style="width: 100%; max-width: 400px; border-radius: 8px; margin-top: 0.75rem;">
+        {% endif %}
+
+        {% if solicitacao[7] != 'Concluído' %}
+        <form action="/concluir/{{ solicitacao[0] }}" method="POST" style="margin-top: 1rem;">
+            <button type="submit">✓ Marcar como Concluído</button>
+        </form>
+        {% else %}
+        <p style="color: var(--green); font-size: 0.85rem; margin-top: 0.75rem;">✓ Concluído</p>
+        {% endif %}
+
+        <form action="/excluir/{{ solicitacao[0] }}" method="POST" style="margin-top: 0.5rem;"
+              onsubmit="return confirm('Tem certeza que deseja excluir esta solicitação?')">
+            <button type="submit" style="background-color: #c0392b;">🗑 Excluir</button>
+        </form>
+    </div>
+    {% endfor %}
+
+</div>
+
+</body>
+</html>
